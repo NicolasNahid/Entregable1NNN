@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from forms import *
+from .forms import *
 # Create your views here.
 
 
@@ -15,8 +15,8 @@ def profesorFormulario(request):
         profesor = Profesor(nombre = info['nombre'],apellido = info['apellido'])
 
         profesor.save()
-        return render(request,"MVTPrimerProyectoApp/index.html")
+        return render(request,"DjangoApp/index.html")
   else:
     formulario = ProfesorForm()
 
-  return render(request,"MVTPrimerProyectoApp/index.html",{'formulario': formulario})
+  return render(request,"DjangoApp/index.html",{'formulario': formulario})

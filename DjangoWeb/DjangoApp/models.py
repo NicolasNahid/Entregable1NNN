@@ -11,7 +11,6 @@ class Alumno(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     
-    
 
 
 class Profesor(models.Model):
