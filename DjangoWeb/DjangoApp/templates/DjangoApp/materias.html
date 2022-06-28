@@ -4,13 +4,13 @@
 
 {% block contenidoPagina %}
 
-<form action = "" method = "POST"> {% csrf_token %}
+<form action = "" method = "POST"> 
+    {% csrf_token %}
 
-    <table>
+   
 
-        {{ FormularioMaterias.as_table }}
+        {{ formularioMaterias.as_p }}
 
-    </table>
 
     <input type="submit", value = "Enviar">
 

@@ -3,9 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Materia(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=30)
     comision = models.IntegerField()
-
 
 class Alumno(models.Model):
     nombre = models.CharField(max_length=50)

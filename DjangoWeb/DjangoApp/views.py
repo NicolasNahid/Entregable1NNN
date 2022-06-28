@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
+from DjangoApp.models import Alumno, Materia, Profesor
+from django.db.models import Q
 from .forms import *
 # Create your views here.
 
@@ -14,20 +16,20 @@ def profesorFormulario(request):
     print(FormularioProfesores)
     
     if FormularioProfesores.is_valid:
-        
-        info = FormularioProfesores.cleaned_data
+            
+            info = FormularioProfesores.cleaned_data
 
-        profesor = Profesor(nombre = info['nombre'],apellido = info['apellido'])
+            profesor = Profesor(nombre = info['nombre'],apellido = info['apellido'])
 
-        profesor.save()
-        
-        return render(request,"DjangoApp/profesores.html")
-    
+            profesor.save()
+            
+            return redirect("inicio")
+    else:
+            return render(request,"DjangoApp/profesores.html",{'FormularioProfesores': FormularioProfesores})
   else:
-      
     FormularioProfesores = ProfesorForm()
 
-  return render(request,"DjangoApp/profesores.html",{'FormularioProfesores': FormularioProfesores})
+    return render(request,"DjangoApp/profesores.html",{'FormularioProfesores': FormularioProfesores})
 
 
 
@@ -47,10 +49,11 @@ def alumnoFormulario(request):
 
         alumno = Alumno(nombre = info['nombre'],apellido = info['apellido'],carrera = info['carrera'])
 
-        alumno.save()
-        
-        return render(request,"DjangoApp/alumnos.html")
-    
+        alumno.save()  
+
+        return redirect("inicio")
+    else: 
+      return render(request,"DjangoApp/alumnos.html",{'FormularioAlumno': FormularioAlumno})
   else:
       
     FormularioAlumno = AlumnoForm()
@@ -65,22 +68,49 @@ def materiaFormulario(request):
     
   if request.method == 'POST':
       
-    FormularioMaterias = MateriaForm(request.POST)
+    formularioMaterias = MateriaForm(request.POST)
     
-    print(FormularioMaterias)
     
-    if FormularioMaterias.is_valid:
+    if formularioMaterias.is_valid():
         
-        info = FormularioMaterias.cleaned_data
+        info = formularioMaterias.cleaned_data
 
-        materia = Materia(nombre = info['nombre'],comision = info['comision'])
+        materia = Materia(nombre = info["nombre"],comision = info["comision"])
 
         materia.save()
         
-        return render(request,"DjangoApp/materias.html")
-    
+        return redirect("inicio")
+    else:
+            return render(request,"DjangoApp/materias.html",{"formularioMaterias":formularioMaterias})
   else:
       
-    FormularioMaterias = MateriaForm()
+    formularioMaterias = MateriaForm()
 
-  return render(request,"DjangoApp/materias.html",{'FormularioMaterias': FormularioMaterias})
+  return render(request,"DjangoApp/materias.html",{'formularioMaterias': formularioMaterias})
+
+
+    
+def inicio(request):
+  if request.method == "POST":
+        materias = Materia.objects.all()
+
+        profesores= Profesor.objects.all()
+
+        alumnos= Alumno.objects.all()
+
+        materia = request.POST["materias"]
+
+        materiasBusqueda = Materia.objects.filter( Q(nombre__icontains=materia) | Q(comision__icontains=materia) ).values()
+        
+        return render(request,"DjangoApp/index.html",{'materias':materias,'profesores':profesores,'alumnos':alumnos,'materiasBusqueda':materiasBusqueda})
+
+  else: # get y otros
+
+      materias = Materia.objects.all()
+
+      profesores= Profesor.objects.all()
+
+      alumnos= Alumno.objects.all()
+
+      return render(request,"DjangoApp/index.html",{'materias':materias,'profesores':profesores,'alumnos':alumnos})
+
