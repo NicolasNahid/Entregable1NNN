@@ -6,16 +6,16 @@ class ProfesorForm(forms.ModelForm):
 
     class Meta:
         model = Profesor
-        fields = ('nombre', 'apellido',)
+        fields = ('nombre','apellido',)
 
-class alumnoForm(forms.ModelForm):
+class AlumnoForm(forms.ModelForm):
 
     class Meta:
         model = Alumno
-        fields = ('nombre','apellido')
+        fields = ('nombre','apellido','carrera',)
 
-class materiaForm(forms.ModelForm):
+class MateriaForm(forms.ModelForm):
 
     class Meta:
-        model = Materias
-        fields = ('nombre','comision')
+        model = Materia
+        fields = ('nombre','comision',)

@@ -5,11 +5,15 @@
 {% block contenidoPagina %}
 
 <form action = "" method = "POST"> {% csrf_token %}
+
     <table>
-        {{formulario.as_table}}
+
+        {{ FormularioProfesores.as_table }}
+
     </table>
 
     <input type="submit", value = "Enviar">
+
 </form>
 
 {% endblock %}
