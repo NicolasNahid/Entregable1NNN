@@ -19,4 +19,4 @@ def profesorFormulario(request):
   else:
     formulario = ProfesorForm()
 
-  return render(request,"MVTPrimerProyectoApp/escuela.html",{'formulario': formulario})
+  return render(request,"MVTPrimerProyectoApp/index.html",{'formulario': formulario})
