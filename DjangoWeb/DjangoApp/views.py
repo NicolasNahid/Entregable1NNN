@@ -91,12 +91,12 @@ def materiaFormulario(request):
 
     
 def inicio(request):
+  materias = Materia.objects.all()
+
+  profesores= Profesor.objects.all()
+
+  alumnos= Alumno.objects.all()
   if request.method == "POST":
-        materias = Materia.objects.all()
-
-        profesores= Profesor.objects.all()
-
-        alumnos= Alumno.objects.all()
 
         materia = request.POST["materias"]
 
@@ -106,11 +106,6 @@ def inicio(request):
 
   else: # get y otros
 
-      materias = Materia.objects.all()
-
-      profesores= Profesor.objects.all()
-
-      alumnos= Alumno.objects.all()
-
+      
       return render(request,"DjangoApp/index.html",{'materias':materias,'profesores':profesores,'alumnos':alumnos})
 
